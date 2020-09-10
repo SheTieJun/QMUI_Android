@@ -94,7 +94,6 @@ public abstract class QMUIBasePopup<T extends QMUIBasePopup> {
 
     private void initWindow() {
         mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mWindow.setFocusable(true);
         mWindow.setTouchable(true);
         mWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -133,10 +132,12 @@ public abstract class QMUIBasePopup<T extends QMUIBasePopup> {
 
     public T dismissIfOutsideTouch(boolean dismissIfOutsideTouch) {
         mDismissIfOutsideTouch = dismissIfOutsideTouch;
-        mWindow.setOutsideTouchable(dismissIfOutsideTouch);
+        mWindow.setOutsideTouchable(true);
         if (dismissIfOutsideTouch) {
+            mWindow.setFocusable(true);
             mWindow.setTouchInterceptor(mOutsideTouchDismissListener);
-        } else {
+        }else {
+            mWindow.setFocusable(false);
             mWindow.setTouchInterceptor(null);
         }
         return (T) this;
